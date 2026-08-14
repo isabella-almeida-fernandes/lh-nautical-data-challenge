@@ -62,3 +62,21 @@ O script `src/schema_generator.py` inspeciona dinamicamente os 24 arquivos CSV e
 
 ### Questão 2.2 - Arquivo DDL (`schema.sql`)
 Arquivo SQL gerado automaticamente contendo o mapeamento de criação de todas as 24 tabelas do banco de dados relacional. O arquivo está disponível na raiz deste repositório (`/schema.sql`).
+
+---
+
+---
+
+## Questão 3 - Carga de Dados (Data Ingestion)
+
+### Questão 3.1 - Script de Carga em Python
+O script `src/load_data.py` realiza a ingestão em lote (*bulk insert*) de todos os 24 arquivos CSV brutos da pasta `lh_nautical_csv/` para um banco relacional local (`data/lh_nautical.db`), preservando a integridade original dos dados (sem expurgo de nulos ou tratamentos indevidos) e respeitando o schema definido.
+
+---
+
+### Questão 3.2 - Validação de Linhas Carregadas
+Total acumulado de registros somando as tabelas essenciais (`customers`, `orders`, `order_items` e `payments`):
+
+* **Total de Linhas Somadas:** `251864`
+
+---
