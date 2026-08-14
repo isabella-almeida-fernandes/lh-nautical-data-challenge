@@ -124,3 +124,62 @@ LIMIT 10;
 - **Isolamento dos Top 10:** Garantido através de subconsulta/CTE filtrando exclusivamente os 10 clientes de maior ticket médio ordenados decrescentemente com desempate por `customer_id ASC`.
 
 ---
+
+## Questão 5 - Dimensão de Datas e Análise de Desempenho por Dia da Semana
+
+### Questão 5.1 - Consulta SQL com Dimensão de Calendário (PostgreSQL)
+
+```sql
+WITH RECURSIVE limites_datas AS (
+    SELECT 
+        MIN(created_at::date) AS data_inicio,
+        MAX(created_at::date) AS data_fim
+    FROM orders
+    WHERE channel = 'pos'
+),
+calendario AS (
+    SELECT generate_series(data_inicio, data_fim, '1 day'::interval)::date AS data_referencia
+    FROM limites_datas
+),
+vendas_diarias AS (
+    SELECT 
+        created_at::date AS data_venda,
+        SUM(total::numeric) AS total_diario
+    FROM orders
+    WHERE channel = 'pos'
+    GROUP BY created_at::date
+),
+calendario_vendas AS (
+    SELECT 
+        c.data_referencia,
+        EXTRACT(DOW FROM c.data_referencia)::int AS dia_indice,
+        COALESCE(v.total_diario, 0.0) AS faturamento_diario
+    FROM calendario c
+    LEFT JOIN vendas_diarias v ON c.data_referencia = v.data_venda
+)
+SELECT 
+    CASE dia_indice
+        WHEN 0 THEN 'Domingo'
+        WHEN 1 THEN 'Segunda-feira'
+        WHEN 2 THEN 'Terça-feira'
+        WHEN 3 THEN 'Quarta-feira'
+        WHEN 4 THEN 'Quinta-feira'
+        WHEN 5 THEN 'Sexta-feira'
+        WHEN 6 THEN 'Sábado'
+    END AS dia_semana,
+    COUNT(*) AS total_dias_avaliados,
+    ROUND(SUM(faturamento_diario), 2) AS faturamento_total,
+    ROUND(AVG(faturamento_diario), 2) AS media_vendas_diaria
+FROM calendario_vendas
+GROUP BY dia_indice
+ORDER BY media_vendas_diaria ASC;
+```
+
+---
+
+### Questão 5.2 - Justificativa Metodológica
+
+- **Necessidade da Dimensão de Calendário:** A tabela transacional registra apenas transações ocorridas. Agrupar diretamente sobre `orders` exclui os dias de loja aberta com faturamento zero, enviesando a contagem de dias (denominador da média).
+- **Impacto da Omissão:** Dias da semana com histórico esparso de vendas têm suas médias infladas artificialmente. A inclusão do calendário com `LEFT JOIN` e `COALESCE(..., 0)` restaura a integridade do cálculo ponderado pelo total real de dias decorridos.
+
+ ---
