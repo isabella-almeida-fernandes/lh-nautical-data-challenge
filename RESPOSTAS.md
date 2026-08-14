@@ -65,8 +65,6 @@ Arquivo SQL gerado automaticamente contendo o mapeamento de criação de todas a
 
 ---
 
----
-
 ## Questão 3 - Carga de Dados (Data Ingestion)
 
 ### Questão 3.1 - Script de Carga em Python
