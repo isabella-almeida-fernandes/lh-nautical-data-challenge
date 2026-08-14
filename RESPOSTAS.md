@@ -50,3 +50,13 @@ Com base na análise exploratória realizada, escreva um breve diagnóstico sobr
 #### Diagnóstico de Confiabilidade
 
 > A tabela `orders` em seu estado bruto atual não é recomendada para tomadas de decisão estratégicas. Identificou-se forte presença de outliers no ticket de vendas (máximo de R$ 127.262,02 frente a uma média de R$ 28.704,99) e incompletude cadastral (24.131 valores nulos em `salesperson_id`), exigindo sanitização prévia.
+
+---
+
+## Questão 2 - Schema
+
+### Questão 2.1 - Script Python (Gerador de Schema)
+O script `src/schema_generator.py` inspeciona dinamicamente os 24 arquivos CSV e gera as instruções DDL compatíveis com PostgreSQL sem utilizar bibliotecas externas.
+
+### Questão 2.2 - Arquivo DDL (`schema.sql`)
+Arquivo SQL gerado automaticamente contendo o mapeamento de criação de todas as 24 tabelas do banco de dados relacional. O arquivo está disponível na raiz deste repositório (`/schema.sql`).
