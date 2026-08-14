@@ -78,3 +78,49 @@ Total acumulado de registros somando as tabelas essenciais (`customers`, `orders
 * **Total de Linhas Somadas:** `251864`
 
 ---
+
+## Questão 4 - Análise de Clientes Fiéis e Segmentação
+
+### Questão 4.1 - Consulta SQL dos Clientes Fiéis (PostgreSQL)
+
+```sql
+WITH customer_metrics AS (
+    SELECT 
+        o.customer_id,
+        ROUND(SUM(o.total::numeric), 2) AS faturamento_total,
+        COUNT(DISTINCT o.id) AS frequencia,
+        ROUND(SUM(o.total::numeric) / COUNT(DISTINCT o.id), 2) AS ticket_medio,
+        COUNT(DISTINCT p.category_id) AS diversidade_categorias
+    FROM orders o
+    INNER JOIN order_items oi ON o.id = oi.order_id
+    INNER JOIN product_variants pv ON oi.product_variant_id = pv.id
+    INNER JOIN products p ON pv.product_id = p.id
+    GROUP BY o.customer_id
+    HAVING COUNT(DISTINCT p.category_id) >= 13
+)
+SELECT 
+    customer_id,
+    ticket_medio,
+    faturamento_total,
+    frequencia,
+    diversidade_categorias
+FROM customer_metrics
+ORDER BY 
+    ticket_medio DESC, 
+    customer_id ASC
+LIMIT 10;
+```
+
+---
+
+### Questão 4.2 - Diagnóstico e Explicação Metodológica
+
+- **Cadeia de Chaves:** `orders.id` -> `order_items.order_id` -> `order_items.product_variant_id` -> `product_variants.id` -> `product_variants.product_id` -> `products.id` -> `products.category_id` -> `categories.id`.
+
+- **Categoria Campeã:** A categoria que mais concentrou itens comprados entre os Top 10 clientes fiéis foi Hélices (ID 8), com 561 unidades adquiridas.
+
+- **Filtro de Diversidade:** Implementado via cláusula `HAVING COUNT(DISTINCT p.category_id) >= 13`.
+
+- **Isolamento dos Top 10:** Garantido através de subconsulta/CTE filtrando exclusivamente os 10 clientes de maior ticket médio ordenados decrescentemente com desempate por `customer_id ASC`.
+
+---
