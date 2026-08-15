@@ -182,4 +182,24 @@ ORDER BY media_vendas_diaria ASC;
 - **Necessidade da Dimensão de Calendário:** A tabela transacional registra apenas transações ocorridas. Agrupar diretamente sobre `orders` exclui os dias de loja aberta com faturamento zero, enviesando a contagem de dias (denominador da média).
 - **Impacto da Omissão:** Dias da semana com histórico esparso de vendas têm suas médias infladas artificialmente. A inclusão do calendário com `LEFT JOIN` e `COALESCE(..., 0)` restaura a integridade do cálculo ponderado pelo total real de dias decorridos.
 
- ---
+---
+
+## Questão 6 - Previsão de Demanda e Modelagem Preditiva
+
+### Questão 6.1 - Script do Modelo Baseline
+Implementado no script `src/previsao_demanda.py`, unificando os datasets de vendas e catálogo de produtos e aplicando a estratégia de janela deslizante (*Rolling Window*) de 3 meses.
+
+---
+
+### Questão 6.2 - Previsão do 1º Trimestre de 2026
+- **Total Previsto (Janeiro a Março de 2026):** `293` unidades
+- **Métrica de Avaliação (MAE):** `29.22` unidades/mês
+
+---
+
+### Questão 6.3 - Justificativa Metodológica e Avaliação
+- **Construção:** Média móvel aritmética dos 3 meses precedentes a cada mês previsto.
+- **Prevenção de Data Leakage:** Restrição estrita à linha temporal ($t-1, t-2, t-3$), sem vazamento de informações futuras.
+- **Limitações do Método:** Defasagem temporal (*lag*), incapacidade de antecipar picos sazonais de demanda e ausência de variáveis exógenas (promoções, sazonalidade climática, variações de preço).
+
+---
