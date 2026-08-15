@@ -203,3 +203,23 @@ Implementado no script `src/previsao_demanda.py`, unificando os datasets de vend
 - **Limitações do Método:** Defasagem temporal (*lag*), incapacidade de antecipar picos sazonais de demanda e ausência de variáveis exógenas (promoções, sazonalidade climática, variações de preço).
 
 ---
+
+## Questão 7 - Sistema de Recomendação (Filtragem Colaborativa Item-Item)
+
+### Questão 7.1 - Script do Sistema de Recomendação
+Implementado no script `src/sistema_recomendacao.py` utilizando `pandas`, `numpy` e `scikit-learn` para construção da matriz esparsa de presença/ausência (Usuário x Produto) e cálculo de similaridade vetorial via cosseno.
+
+---
+
+### Questão 7.2 - Produto Mais Similar
+- **Item de Referência:** `Motor de Popa 1949`
+- **Produto Mais Similar (1º Lugar):** `Motor de Popa 5331` (Score de Cosseno: `0.2566`)
+
+---
+
+### Questão 7.3 - Justificativa Metodológica
+- **Construção da Matriz:** Pivotação binária de clientes (linhas) por produtos (colunas), onde 1 indica compra pregressa e 0 ausência.
+- **Significado do Cosseno:** Medida normalizada de coocorrência de clientes entre dois itens, avaliando o alinhamento vetorial do comportamento de consumo.
+- **Limitações:** Suscetibilidade a *Cold Start* (novos produtos/clientes sem histórico) e viés de recomendar produtos substitutos em vez de complementares sem atributos de catálogo (*Content-Based*).
+
+---
