@@ -223,3 +223,22 @@ Implementado no script `src/sistema_recomendacao.py` utilizando `pandas`, `numpy
 - **Limitações:** Suscetibilidade a *Cold Start* (novos produtos/clientes sem histórico) e viés de recomendar produtos substitutos em vez de complementares sem atributos de catálogo (*Content-Based*).
 
 ---
+
+## Material Complementar — Dashboard Executivo & Visualizações de Impacto
+
+Como entrega complementar de comunicação orientada a dados, foi desenvolvido um aplicativo interativo em **Streamlit (`src/app_dashboard.py`)** integrado diretamente à base relacional (`data/lh_nautical.db`).
+
+### Visões Implementadas:
+1. **Segmentação & Clientes Fiéis (Questão 4):**
+   - Gráfico de barras do Top 10 Clientes por Ticket Médio ponderado por diversidade ($\ge 13$ categorias).
+   - Composição de mix de vendas evidenciando a liderança da categoria **Hélices** (561 unidades).
+2. **Eficiência Operacional & Dias da Semana (Questão 5):**
+   - Gráfico de barras com a média diária real de vendas por dia da semana em lojas físicas (`pos`), corrigindo o viés de agregação com a dimensão de calendário e destacando **Quinta-feira** e **Domingo** como dias de menor média.
+3. **Previsão de Demanda (Questão 6):**
+   - Gráfico de série temporal comparando o histórico de vendas reais e a projeção de 3 meses para a *Bússola de Bordo 702* (Total de 293 unidades; MAE: 29.22).
+4. **Cross-Selling & Recomendação (Questão 7):**
+   - Visualização da similaridade de cosseno destacando o *Motor de Popa 5331* como produto líder de recomendação para o item de referência.
+
+### Como Executar o Dashboard:
+```bash
+streamlit run src/app_dashboard.py
