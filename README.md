@@ -41,10 +41,10 @@ O projeto foi desenhado sobre uma arquitetura modular que transforma eventos tra
 
 ```text
 ├── data/
-│   ├── raw/                 # Datasets transacionais brutos em CSV
 │   └── lh_nautical.db       # Banco relacional auditado e normalizado
 ├── docs/
-│   └── LH_Nautical_Relatorio_Executivo.pdf # Apresentação executiva em alta resolução
+│   └── LH_Nautical_Relatorio_Executivo.pdf # Apresentação executiva em PDF
+├── lh_nautical_csv/         # Datasets transacionais brutos em CSV
 ├── sql/
 │   ├── schema.sql                   # DDL de criação das tabelas relacionais
 │   ├── codigo_sql.sql               # Query de validação e métricas gerais (Q1.1)
