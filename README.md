@@ -26,6 +26,32 @@ O projeto foi desenhado sobre uma arquitetura modular que transforma eventos tra
 
 ---
 
+## 🖥️ Demonstração do Painel Interativo (Streamlit)
+
+<p align="center">
+  <img src="assets/dashboard_pagina_inicial.png" alt="Visão Geral do Dashboard" width="850">
+</p>
+
+<p align="center">
+  <img src="assets/dashboard_analise_fidelidade.png" alt="Módulo de Análise" width="850">
+</p>
+
+<p align="center">
+  <img src="assets/dashboard_analise_calendario.png" alt="Média de Vendas por Dia da Semana" width="850">
+</p>
+
+<p align="center">
+  <img src="assets/dashboard_previsao_demanda.png" alt="Módulo de Previsão" width="850">
+</p>
+
+<p align="center">
+  <img src="assets/dashboard_sistema_recomendacao.png" alt="Módulo de Sistema de Recomendação" width="850">
+</p>
+
+> *Aplicação interativa desenvolvida em Python (Streamlit & Plotly) para exploração de KPIs, segmentação de clientes fiéis, análise operacional e predição de demanda.*
+
+---
+
 ## 🛠️ Tecnologias & Bibliotecas
 
 * **Linguagem:** Python 3.10+
@@ -40,6 +66,7 @@ O projeto foi desenhado sobre uma arquitetura modular que transforma eventos tra
 ## 📁 Estrutura do Repositório
 
 ```text
+├── assets/                  # Imagens e prints de demonstração do projeto
 ├── data/
 │   └── lh_nautical.db       # Banco relacional auditado e normalizado
 ├── docs/
